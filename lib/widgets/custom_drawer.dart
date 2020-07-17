@@ -2,6 +2,10 @@ import 'package:ecommerce_app/tiles/drawer_tile.dart';
 import 'package:flutter/material.dart';
 
 class CustomDrawer extends StatelessWidget {
+//criar um construtor que recebe o page Controller
+  final PageController pageController;
+  CustomDrawer(this.pageController);
+
   @override
   Widget build(BuildContext context) {
 //função de estilização de gradiente de pagina principal
@@ -85,11 +89,12 @@ class CustomDrawer extends StatelessWidget {
               Divider(
                 color: Colors.white,
               ),
-              DrawerTile(Icons.home, "Home"),
-              DrawerTile(Icons.category, "Categorias"),
-              DrawerTile(Icons.list, "Produtos"),
-              DrawerTile(Icons.location_on, "Lojas"),
-              DrawerTile(Icons.featured_play_list, "Meus pedidos"),
+              DrawerTile(Icons.home, "Home", pageController, 0),
+              DrawerTile(Icons.category, "Categorias", pageController, 1),
+              DrawerTile(Icons.list, "Produtos", pageController, 2),
+              DrawerTile(Icons.location_on, "Lojas", pageController, 3),
+              DrawerTile(
+                  Icons.featured_play_list, "Meus pedidos", pageController, 4),
             ],
           ),
         ],
