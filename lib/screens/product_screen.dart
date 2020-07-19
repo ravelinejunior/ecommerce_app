@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:ecommerce_app/datas/product_data.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +19,9 @@ class _ProductScreenState extends State<ProductScreen> {
   _ProductScreenState(this.product);
 
   final Color corTheme = Colors.redAccent;
+
+  //string para verificar qual tamanho está selecionado
+  String size;
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +46,10 @@ class _ProductScreenState extends State<ProductScreen> {
               }).toList(),
               dotSize: 4.0,
               dotSpacing: 15.0,
-              dotBgColor: Colors.pinkAccent,
+              dotBgColor: Colors.transparent,
               dotColor: corTheme,
               autoplay: true,
+              autoplayDuration: Duration(seconds: 3),
             ),
           ),
           Padding(
@@ -63,6 +69,90 @@ class _ProductScreenState extends State<ProductScreen> {
                       fontWeight: FontWeight.bold,
                       color: corTheme),
                   maxLines: 3,
+                ),
+                SizedBox(height: 16.0), // margin entre os boxes
+                Text(
+                  "Tamanhos",
+                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
+                  maxLines: 3,
+                ),
+                // margin entre os boxes
+                //utilizar a gridview para criar os tamanhos
+                SizedBox(
+                  height: 34.0,
+                  child: GridView(
+                    padding: EdgeInsets.symmetric(vertical: 4.0),
+                    scrollDirection: Axis.horizontal,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 1, // pois será apenas uma linha de uso
+                      mainAxisSpacing: 8.0,
+                      childAspectRatio: 0.5,
+                    ),
+                    children:
+                        //transformar em mapa para pegar valores dos tamanhos
+                        product.sizes.map(
+                      (sizes) {
+                        //CAIXAS DE TAMANHO WIDGETS
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              size = sizes;
+                            });
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(4.0),
+                              ),
+                              border: Border.all(
+                                //verificar cor por valor selecionado
+                                color:
+                                    sizes == size ? corTheme : Colors.grey[500],
+                                width: 4.0,
+                              ),
+                            ),
+                            width: 50.0,
+                            alignment: Alignment.center,
+                            child: Text(sizes),
+                          ),
+                        );
+                      },
+                    ).toList(),
+                  ),
+                ),
+                SizedBox(height: 16),
+                //BOTAO WIDGET
+                SizedBox(
+                  height: 44.0,
+                  child: RaisedButton(
+                    onPressed:
+                        //condição para verificar se o tamanho foi selecionado para poder habilitar o botao
+                        size != null ? () {} : null,
+                    child: Text(
+                      "Adicionar ao carrinho",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    color: Colors.redAccent[400],
+                    textColor: Colors.white,
+                  ),
+                ),
+                SizedBox(height: 16),
+                //DESCRIÇÃO WIDGET
+                Text(
+                  "Descrição:",
+                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    product.description,
+                    style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
                 ),
               ],
             ),
