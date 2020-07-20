@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/screens/home_screen.dart';
+import 'package:ecommerce_app/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +17,8 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         primaryColor: Color.fromARGB(255, 4, 125, 141),
       ),
-      home: HomeScreen(),
+     // home: HomeScreen(),
+      home: LoginScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
