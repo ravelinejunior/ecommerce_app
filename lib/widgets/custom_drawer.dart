@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/screens/login_screen.dart';
 import 'package:ecommerce_app/tiles/drawer_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -13,9 +14,12 @@ class CustomDrawer extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color.fromARGB(255, 229, 57, 53),
+                /* Color.fromARGB(255, 229, 57, 53),
                 Color.fromARGB(255, 239, 83, 80),
-                Color.fromARGB(255, 239, 154, 154),
+                Color.fromARGB(255, 239, 154, 154), */
+                Color.fromARGB(255, 239, 83, 80),
+                Colors.pink[300],
+                Color.fromARGB(255, 239, 154, 154)
               ],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
@@ -78,7 +82,12 @@ class CustomDrawer extends StatelessWidget {
                                 color: Colors.white,
                               ),
                             ),
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (contex) => LoginScreen()),
+                              );
+                            },
                           ),
                         ],
                       ),

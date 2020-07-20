@@ -1,10 +1,8 @@
-import 'package:ecommerce_app/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
+class SignUpScreen extends StatelessWidget {
   //chave global dos campos de validação
   final _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,23 +11,10 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.pink,
         title: Text(
-          "Login",
+          "Criar conta",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        actions: <Widget>[
-          FlatButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => SignUpScreen()),
-              );
-            },
-            child: Text(
-              "Criar conta",
-              style: TextStyle(fontSize: 15.0, color: Colors.white),
-            ),
-          ),
-        ],
       ),
 
       //FORMULARIO WIDGET
@@ -38,11 +23,43 @@ class LoginScreen extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.all(16.0),
           children: <Widget>[
-            //EMAIL
             TextFormField(
               decoration: InputDecoration(),
             ),
             SizedBox(height: 20.0),
+            //NOME
+            TextFormField(
+              decoration: InputDecoration(
+                hintText: "Nome completo",
+                fillColor: Colors.black45,
+                icon: Icon(
+                  Icons.person,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              validator: (text) {
+                //CONDIÇÃO PARA VERIFICAR SE CAMPO NOME É VAZIO
+                if (text.isEmpty) return "Nome inválido";
+              },
+            ),
+            SizedBox(height: 16.0),
+            //ENDEREÇO
+            TextFormField(
+              decoration: InputDecoration(
+                hintText: "Endereço",
+                fillColor: Colors.black45,
+                icon: Icon(
+                  Icons.home,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              validator: (text) {
+                //CONDIÇÃO PARA VERIFICAR SE CAMPO NOME É VAZIO
+                if (text.isEmpty) return "Endereço inválido";
+              },
+            ),
+            SizedBox(height: 16.0),
+            //EMAIL
             TextFormField(
               decoration: InputDecoration(
                 hintText: "Email",
@@ -57,8 +74,6 @@ class LoginScreen extends StatelessWidget {
                 //CONDIÇÃO PARA VERIFICAR SE CAMPO EMAIL É VAZIO
                 if (text.isEmpty || !text.contains("@"))
                   return "Email inválido";
-                else
-                  return text;
               },
             ),
             SizedBox(height: 16.0),
@@ -78,22 +93,7 @@ class LoginScreen extends StatelessWidget {
                 //CONDIÇÃO PARA VERIFICAR SE CAMPO EMAIL É VAZIO
                 if (password.isEmpty || password.length < 6)
                   return "Senha inválida";
-                else
-                  return password;
               },
-            ),
-            SizedBox(height: 16.0),
-            //BOTAO ESQUECER SENHA WIDGET
-            Align(
-              alignment: Alignment.centerRight,
-              child: FlatButton(
-                onPressed: () {},
-                child: Text(
-                  "Esqueci minha senha",
-                  textAlign: TextAlign.right,
-                ),
-                padding: EdgeInsets.zero,
-              ),
             ),
             SizedBox(height: 16.0),
             //LOGAR WIDGET
@@ -110,7 +110,7 @@ class LoginScreen extends StatelessWidget {
                 textColor: Colors.white,
                 color: Colors.pink,
                 child: Text(
-                  "Entrar",
+                  "Cadastrar",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 18.0,
