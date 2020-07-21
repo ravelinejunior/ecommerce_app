@@ -23,9 +23,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   //chave global dos campos de validação
   final _formKey = GlobalKey<FormState>();
+
+//chave global para scafold
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       extendBodyBehindAppBar: true,
       //APPBAR WIDGET
       appBar: AppBar(
@@ -151,9 +156,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             onSucess: _onSucess,
                             onFailure: _onFailure);
                       }
-
-                      //limpar depois do cadastro
-                      clearControllers();
                     },
                     textColor: Colors.white,
                     color: Colors.pink,
@@ -173,7 +175,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  void _onSucess() {}
+  void _onSucess() {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text("Usuário criado com sucesso!",
+          style: TextStyle(color: Colors.white)),
+      backgroundColor: Theme.of(context).primaryColor,
+      duration: Duration(seconds: 3),
+    ));
 
-  void _onFailure() {}
+    //sair da tela apos criação
+    Future.delayed(Duration(seconds: 3)).then((_) {
+      Navigator.of(context).pop();
+    });
+  }
+
+  void _onFailure() {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content:
+          Text("Falha ao criar usuario", style: TextStyle(color: Colors.red)),
+      backgroundColor: Colors.black,
+      duration: Duration(seconds: 3),
+    ));
+  }
 }

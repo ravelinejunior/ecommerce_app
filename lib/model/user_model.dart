@@ -14,6 +14,14 @@ class UserModel extends Model {
 //para verificar se dados estão carregando
   bool isLoading = false;
 
+//chamado quando app é inicializado
+  @override
+  void addListener(listener) async {
+    super.addListener(listener);
+    //carregar dados do usuario
+    await _loadCurrentUser();
+  }
+
 //@required para ser obrigatorio
   void signUp(
       {@required Map<String, dynamic> userData,
@@ -45,11 +53,31 @@ class UserModel extends Model {
     });
   }
 
-  void signIn() async {
+  void signIn(
+      {@required String email,
+      @required String pass,
+      @required VoidCallback onSucess,
+      @required VoidCallback onFailure}) async {
     isLoading = true;
     //notificar o Flutter que houve uma alteração
     notifyListeners();
-    await Future.delayed(Duration(seconds: 3));
+
+    _auth
+        .signInWithEmailAndPassword(email: email, password: pass)
+        .then((authResult) async {
+      firebaseUser = authResult.user;
+
+//carregar dados do usuario
+      await _loadCurrentUser();
+
+      onSucess();
+      isLoading = false;
+      notifyListeners();
+    }).catchError((e) {
+      onFailure();
+      isLoading = false;
+      notifyListeners();
+    });
 
     //após carregar notificar que não está mais carregando
     isLoading = false;
@@ -59,7 +87,7 @@ class UserModel extends Model {
   void recoverPass() {}
 
   bool isLoggedIn() {
-    return false;
+    return firebaseUser != null;
   }
 
   //função para salvar usuario
@@ -69,5 +97,34 @@ class UserModel extends Model {
         .collection("Users")
         .document(firebaseUser.uid)
         .setData(userData);
+  }
+
+  //função signOut
+  void signOut() async {
+    await _auth.signOut();
+
+//dados usuario receber um mapa vazio
+    userData = Map();
+    firebaseUser = null;
+    notifyListeners();
+  }
+
+  //carregar dados usuario
+  Future<Null> _loadCurrentUser() async {
+    //verificar se usuario está vazio
+    if (firebaseUser == null) firebaseUser = await _auth.currentUser();
+
+    if (firebaseUser != null) {
+      if (userData['name'] == null) {
+        //recuperar os itens do documento do usuario logado
+        DocumentSnapshot docUser = await Firestore.instance
+            .collection("Users")
+            .document(firebaseUser.uid)
+            .get();
+
+        userData = docUser.data;
+      }
+    }
+    notifyListeners();
   }
 }

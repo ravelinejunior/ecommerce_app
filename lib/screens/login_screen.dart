@@ -3,13 +3,26 @@ import 'package:ecommerce_app/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   //chave global dos campos de validação
   final _formKey = GlobalKey<FormState>();
+
+  //controllers
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+//chave global para scafold
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       extendBodyBehindAppBar: true,
       //APPBAR WIDGET
       appBar: AppBar(
@@ -56,6 +69,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 20.0),
                   TextFormField(
+                    controller: _emailController,
                     decoration: InputDecoration(
                       hintText: "Email",
                       fillColor: Colors.black45,
@@ -69,13 +83,12 @@ class LoginScreen extends StatelessWidget {
                       //CONDIÇÃO PARA VERIFICAR SE CAMPO EMAIL É VAZIO
                       if (text.isEmpty || !text.contains("@"))
                         return "Email inválido";
-                      else
-                        return text;
                     },
                   ),
                   SizedBox(height: 16.0),
                   //SENHA
                   TextFormField(
+                    controller: _passwordController,
                     decoration: InputDecoration(
                       hintText: "Senha",
                       icon: Icon(
@@ -90,8 +103,6 @@ class LoginScreen extends StatelessWidget {
                       //CONDIÇÃO PARA VERIFICAR SE CAMPO EMAIL É VAZIO
                       if (password.isEmpty || password.length < 6)
                         return "Senha inválida";
-                      else
-                        return password;
                     },
                   ),
                   SizedBox(height: 16.0),
@@ -118,7 +129,12 @@ class LoginScreen extends StatelessWidget {
                         //validando os campos do formulario
                         if (_formKey.currentState.validate()) {}
                         //invocar model sign in
-                        model.signIn();
+                        model.signIn(
+                          email: _emailController.text,
+                          pass: _passwordController.text,
+                          onSucess: _onSucess,
+                          onFailure: _onFailure,
+                        );
                       },
                       textColor: Colors.white,
                       color: Colors.pink,
@@ -137,5 +153,29 @@ class LoginScreen extends StatelessWidget {
         },
       ),
     );
+  }
+
+  void _onSucess() {
+    Center(
+        child: CircularProgressIndicator(
+      valueColor: AlwaysStoppedAnimation<Color>(Colors.pink),
+    ));
+    Future.delayed(Duration(seconds: 3));
+    Navigator.of(context).pop();
+  }
+
+  void _onFailure() {
+    Center(
+        child: CircularProgressIndicator(
+      valueColor: AlwaysStoppedAnimation<Color>(Colors.pink),
+    ));
+    Future.delayed(Duration(seconds: 3));
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text("Falha ao logar",
+          style: TextStyle(
+              color: Colors.red, fontWeight: FontWeight.bold, fontSize: 16.0)),
+      backgroundColor: Colors.black,
+      duration: Duration(seconds: 3),
+    ));
   }
 }

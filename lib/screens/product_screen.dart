@@ -125,6 +125,7 @@ class _ProductScreenState extends State<ProductScreen> {
                 SizedBox(
                   height: 44.0,
                   child: RaisedButton(
+                    splashColor: Theme.of(context).primaryColor,
                     onPressed:
                         //condição para verificar se o tamanho foi selecionado para poder habilitar o botao
                         size != null ? () {} : null,
