@@ -67,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextFormField(
                     decoration: InputDecoration(),
                   ),
-                  SizedBox(height: 20.0),
+                  SizedBox(height: 32.0),
                   TextFormField(
                     controller: _emailController,
                     decoration: InputDecoration(
@@ -110,7 +110,31 @@ class _LoginScreenState extends State<LoginScreen> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: FlatButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        //verificar se email está vazio
+                        if (_emailController.text.isEmpty)
+                          _scaffoldKey.currentState.showSnackBar(SnackBar(
+                            content: Text(
+                                "Insira seu email para recuperar senha",
+                                style: TextStyle(
+                                    color: Colors.red,
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.bold)),
+                            backgroundColor: Colors.black,
+                            duration: Duration(seconds: 3),
+                          ));
+                        else {
+                          //recuperar email
+                          model.recoverPass(_emailController.text);
+                          _scaffoldKey.currentState.showSnackBar(SnackBar(
+                            content: Text("Confira seu email",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 14.0)),
+                            backgroundColor: Theme.of(context).primaryColor,
+                            duration: Duration(seconds: 3),
+                          ));
+                        }
+                      },
                       child: Text(
                         "Esqueci minha senha",
                         textAlign: TextAlign.right,
