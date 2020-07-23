@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class UserModel extends Model {
@@ -8,6 +8,9 @@ class UserModel extends Model {
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser firebaseUser;
 
+  //metodo estatico para acesso a classe
+  static UserModel of(BuildContext context) =>
+      ScopedModel.of<UserModel>(context);
 //conterá os dados do usuario
   Map<String, dynamic> userData = Map();
 

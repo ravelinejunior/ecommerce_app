@@ -13,11 +13,20 @@ class ProductData {
   basicamente é um tipo de conversor de dados do tipo snapshot para esse model
   */
   ProductData.fromDocument(DocumentSnapshot snapshot) {
-    id = snapshot.data['id'];
+    id = snapshot.documentID;
     title = snapshot.data['title'];
     description = snapshot.data['description'];
     price = snapshot.data['price'] + 0.0; // para caso valores inteiros
     sizes = snapshot.data['sizes'];
     images = snapshot.data['images'];
+  }
+
+//pegar o "resumo dos dados selecionados no carrinho"
+  Map<String, dynamic> toResumedMap() {
+    return {
+      'title': title,
+      'description': description,
+      'price': price,
+    };
   }
 }

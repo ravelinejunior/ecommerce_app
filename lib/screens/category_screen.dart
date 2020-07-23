@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/datas/product_data.dart';
 import 'package:ecommerce_app/tiles/product_tile.dart';
+import 'package:ecommerce_app/widgets/cart_button.dart';
 import 'package:flutter/material.dart';
 
 class CategoryScreen extends StatelessWidget {
@@ -31,6 +32,8 @@ class CategoryScreen extends StatelessWidget {
             ],
           ),
         ),
+        //WIDGET CARRINHO DE COMPRAS
+        floatingActionButton: CartButton(),
         body: //os dados que virão do firebase serão do "futuro"
             //criar o tab bar apenas depois de carregar os dados
             FutureBuilder<QuerySnapshot>(
@@ -61,11 +64,12 @@ class CategoryScreen extends StatelessWidget {
                         ),
                     itemCount: snapshot.data.documents.length,
                     itemBuilder: (contex, index) {
-                      return ProductTile(
-                        "grid",
-                        ProductData.fromDocument(
-                            snapshot.data.documents[index]),
-                      );
+                      //recuperar valor da categoria
+                      ProductData data = ProductData.fromDocument(
+                          snapshot.data.documents[index]);
+                      //setar valor categoria
+                      data.category = this.snapshot.documentID;
+                      return ProductTile("grid", data);
                     },
                   ),
                   //tipo lista
@@ -73,11 +77,12 @@ class CategoryScreen extends StatelessWidget {
                     padding: EdgeInsets.all(4.0),
                     itemCount: snapshot.data.documents.length,
                     itemBuilder: (contex, index) {
-                      return ProductTile(
-                        "list",
-                        ProductData.fromDocument(
-                            snapshot.data.documents[index]),
-                      );
+                      //recuperar valor da categoria
+                      ProductData data = ProductData.fromDocument(
+                          snapshot.data.documents[index]);
+                      //setar valor categoria
+                      data.category = this.snapshot.documentID;
+                      return ProductTile("list", data);
                     },
                   )
                 ],

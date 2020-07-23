@@ -1,8 +1,16 @@
 import 'dart:ui';
 
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:ecommerce_app/datas/cart_product.dart';
 import 'package:ecommerce_app/datas/product_data.dart';
+import 'package:ecommerce_app/model/cart_model.dart';
+import 'package:ecommerce_app/model/user_model.dart';
+import 'package:ecommerce_app/screens/login_screen.dart';
+import 'package:ecommerce_app/widgets/cart_button.dart';
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
+
+import 'cart_screen.dart';
 
 class ProductScreen extends StatefulWidget {
 //construtor com dados do objeto selecionado
@@ -33,7 +41,30 @@ class _ProductScreenState extends State<ProductScreen> {
         ),
         centerTitle: true,
         backgroundColor: corTheme,
+        actions: <Widget>[
+          InkWell(
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => CartSreen()));
+            },
+            child: Container(
+              padding: EdgeInsets.only(right: 8.0),
+              //alinhar texto do carrinho
+              alignment: Alignment.centerRight,
+              //declarar tipo de chamada nno scopedmodel
+              child: ScopedModelDescendant<CartModel>(
+                  builder: (context, child, model) {
+                // quantidade de produtos
+                return Icon(
+                  Icons.shopping_cart,
+                  color: Colors.white,
+                );
+              }),
+            ),
+          ),
+        ],
       ),
+
       //como usuario poderá deslizar na tela, usar listView
       body: ListView(
         children: <Widget>[
@@ -128,9 +159,32 @@ class _ProductScreenState extends State<ProductScreen> {
                     splashColor: Theme.of(context).primaryColor,
                     onPressed:
                         //condição para verificar se o tamanho foi selecionado para poder habilitar o botao
-                        size != null ? () {} : null,
+                        size != null
+                            ? () {
+                                if (UserModel.of(context).isLoggedIn()) {
+                                  CartProduct cartProduct = CartProduct();
+                                  cartProduct.size = size;
+                                  cartProduct.category = product.category;
+                                  cartProduct.quantity = 1;
+                                  cartProduct.idProduct = product.id;
+
+                                  //adicionar carrinho
+                                  CartModel.of(context)
+                                      .addCartItem(cartProduct);
+                                } else {
+                                  // jogar usuario para a tela de login
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginScreen()),
+                                  );
+                                }
+                              }
+                            : null,
                     child: Text(
-                      "Adicionar ao carrinho",
+                      //verificar se usuario está logado
+                      UserModel.of(context).isLoggedIn()
+                          ? "Adicionar ao carrinho"
+                          : "Fazer login",
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 18.0,
