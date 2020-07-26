@@ -74,7 +74,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   validator: (text) {
                     //CONDIÇÃO PARA VERIFICAR SE CAMPO NOME É VAZIO
-                    if (text.isEmpty) return "Nome inválido";
+                    if (text.isEmpty)
+                      return "Nome inválido";
+                    else
+                      return null;
                   },
                 ),
                 SizedBox(height: 16.0),
@@ -91,7 +94,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   validator: (text) {
                     //CONDIÇÃO PARA VERIFICAR SE CAMPO NOME É VAZIO
-                    if (text.isEmpty) return "Endereço inválido";
+                    if (text.isEmpty)
+                      return "Endereço inválido";
+                    else
+                      return null;
                   },
                 ),
                 SizedBox(height: 16.0),
@@ -111,6 +117,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     //CONDIÇÃO PARA VERIFICAR SE CAMPO EMAIL É VAZIO
                     if (text.isEmpty || !text.contains("@"))
                       return "Email inválido";
+                    else
+                      return null;
                   },
                 ),
                 SizedBox(height: 16.0),
@@ -131,6 +139,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     //CONDIÇÃO PARA VERIFICAR SE CAMPO EMAIL É VAZIO
                     if (password.isEmpty || password.length < 6)
                       return "Senha inválida";
+                    else
+                      return null;
                   },
                 ),
                 SizedBox(height: 16.0),

@@ -83,6 +83,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       //CONDIÇÃO PARA VERIFICAR SE CAMPO EMAIL É VAZIO
                       if (text.isEmpty || !text.contains("@"))
                         return "Email inválido";
+                      else
+                        return null;
                     },
                   ),
                   SizedBox(height: 16.0),
@@ -103,6 +105,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       //CONDIÇÃO PARA VERIFICAR SE CAMPO EMAIL É VAZIO
                       if (password.isEmpty || password.length < 6)
                         return "Senha inválida";
+                      else
+                        return null;
                     },
                   ),
                   SizedBox(height: 16.0),

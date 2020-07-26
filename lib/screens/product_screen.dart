@@ -6,7 +6,7 @@ import 'package:ecommerce_app/datas/product_data.dart';
 import 'package:ecommerce_app/model/cart_model.dart';
 import 'package:ecommerce_app/model/user_model.dart';
 import 'package:ecommerce_app/screens/login_screen.dart';
-import 'package:ecommerce_app/widgets/cart_button.dart';
+
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 

@@ -11,6 +11,8 @@ class CartModel extends Model {
 
   CartModel(this.userModel);
 
+  bool isLoading = false;
+
   //metodo de acesso estatico a classe
   static CartModel of(BuildContext context) =>
       ScopedModel.of<CartModel>(context);
