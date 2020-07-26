@@ -9,7 +9,9 @@ class CartModel extends Model {
   UserModel userModel;
   List<CartProduct> listProducts = [];
 
-  CartModel(this.userModel);
+  CartModel(this.userModel) {
+    if (userModel.isLoggedIn()) _loadCartItems();
+  }
 
   bool isLoading = false;
 
@@ -46,6 +48,50 @@ class CartModel extends Model {
 
     //remover da lista
     listProducts.remove(cartProduct);
+    notifyListeners();
+  }
+
+  //função para remover item
+  void decProduct(CartProduct cartProduct) {
+    cartProduct.quantity--;
+    Firestore.instance
+        .collection("Users")
+        .document(userModel.firebaseUser.uid)
+        .collection("cart")
+        .document(cartProduct.idCart)
+        .updateData(cartProduct.toMap());
+
+//adicionar na tela
+    notifyListeners();
+  }
+
+  //função para adicionar item
+  void incProduct(CartProduct cartProduct) {
+    cartProduct.quantity++;
+    Firestore.instance
+        .collection("Users")
+        .document(userModel.firebaseUser.uid)
+        .collection("cart")
+        .document(cartProduct.idCart)
+        .updateData(cartProduct.toMap());
+
+    notifyListeners();
+  }
+
+  //carregar todos os itens na tela
+  void _loadCartItems() async {
+    //recuperar todos os documentos
+    QuerySnapshot querySnapshot = await Firestore.instance
+        .collection("Users")
+        .document(userModel.firebaseUser.uid)
+        .collection("cart")
+        .getDocuments();
+
+//retornar uma lista com todos os documentos vinda da query
+    listProducts = querySnapshot.documents
+        .map((doc) => CartProduct.fromDocument(doc))
+        .toList();
+
     notifyListeners();
   }
 }
