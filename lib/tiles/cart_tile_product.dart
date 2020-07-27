@@ -66,7 +66,7 @@ class CartTile extends StatelessWidget {
                     IconButton(
                       icon: Icon(
                         Icons.remove,
-                        size: 18.0,
+                        size: 26.0,
                         color: Theme.of(context).primaryColor,
                       ),
                       onPressed: cartProduct.quantity > 1
@@ -89,7 +89,7 @@ class CartTile extends StatelessWidget {
                       icon: Icon(
                         Icons.add,
                         color: Theme.of(context).primaryColor,
-                        size: 18.0,
+                        size: 26.0,
                       ),
                       onPressed: () {
                         CartModel.of(context).incProduct(cartProduct);

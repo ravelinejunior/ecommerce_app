@@ -2,13 +2,19 @@ import 'package:ecommerce_app/model/cart_model.dart';
 import 'package:ecommerce_app/model/user_model.dart';
 import 'package:ecommerce_app/screens/login_screen.dart';
 import 'package:ecommerce_app/tiles/cart_tile_product.dart';
+import 'package:ecommerce_app/widgets/cart_price.dart';
+import 'package:ecommerce_app/widgets/cep_widget.dart';
+import 'package:ecommerce_app/widgets/discount_cart.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class CartSreen extends StatelessWidget {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         title: Text("Meu carrinho",
@@ -118,6 +124,12 @@ class CartSreen extends StatelessWidget {
                     return CartTile(product);
                   }).toList(),
                 ),
+                //WIDGET DE DESCONTOS
+                DiscountCart(),
+                //WIDGET DE CEP
+                CepCart(),
+                //WIDGET SUBMENU
+                CartPrice(() {}),
               ],
             );
           }

@@ -9,11 +9,23 @@ class CartModel extends Model {
   UserModel userModel;
   List<CartProduct> listProducts = [];
 
+  //CODIGO DO CUPOM DE DESCONTO
+  String cupomCode;
+
+  //PORCENTAGEM DO CUPOM
+  int cupomPercentage = 0;
+
   CartModel(this.userModel) {
     if (userModel.isLoggedIn()) _loadCartItems();
   }
 
   bool isLoading = false;
+
+  //cupom de desconto
+  void setCoupom(String cupomCode, int discountPercentage) {
+    this.cupomCode = cupomCode;
+    this.cupomPercentage = discountPercentage;
+  }
 
   //metodo de acesso estatico a classe
   static CartModel of(BuildContext context) =>
