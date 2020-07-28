@@ -128,7 +128,71 @@ class CartModel extends Model {
     return 9.99;
   }
 
+//função de autalização dos preços
   void updatePrice() {
     notifyListeners();
+  }
+
+  // função de finalização de pedidos
+  Future<String> finishOrders() async {
+    //para ter certeza de que a lista não está vazia
+    if (listProducts.length == 0) return null;
+
+    isLoading = true;
+    notifyListeners();
+
+    double productsPrice = getProductsPrice();
+    double shipPrice = getShipPrice();
+    double discount = getDiscountPrice();
+    double total = productsPrice - discount + shipPrice;
+
+    //criar as instancias no firebase e add em forma de mapa
+    //para recuperar o id do documento criado, utilizar documentref
+    DocumentReference refOrder =
+        await Firestore.instance.collection("Orders").add(
+      {
+        'clientId': userModel.firebaseUser.uid,
+        //mapear os produtos
+        'products':
+            listProducts.map((cartProduct) => cartProduct.toMap()).toList(),
+        'shipPrice': productsPrice,
+        'discount': discount,
+        'totalPrice': total,
+        'status': 1
+      },
+    );
+
+    //colocar o id do documento no usuario que o selecionou
+    await Firestore.instance
+        .collection("Users")
+        .document(userModel.firebaseUser.uid)
+        .collection("orders")
+        .document(refOrder.documentID)
+        .setData(
+      {'orderId': refOrder.documentID},
+    );
+
+    //remover todos os itens do carrinho, tanto na lista quanto no firebase
+    QuerySnapshot query = await Firestore.instance
+        .collection("Users")
+        .document(userModel.firebaseUser.uid)
+        .collection("cart")
+        .getDocuments();
+
+    //para cada DocumentSnapshot
+    for (DocumentSnapshot doc in query.documents) {
+      doc.reference.delete();
+    }
+
+    //limpar lista
+    listProducts.clear();
+
+    cupomCode = null;
+    cupomPercentage = 0;
+
+    isLoading = false;
+    notifyListeners();
+
+    return refOrder.documentID;
   }
 }

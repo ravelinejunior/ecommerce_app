@@ -129,7 +129,12 @@ class CartSreen extends StatelessWidget {
                 //WIDGET DE CEP
                 CepCart(),
                 //WIDGET SUBMENU
-                CartPrice(() {}),
+                CartPrice(
+                  () async {
+                    String orderId = await model.finishOrders();
+                    if (orderId != null) print("Order Id:" + orderId);
+                  },
+                ),
               ],
             );
           }

@@ -30,15 +30,15 @@ class _DiscountCartState extends State<DiscountCart> {
             padding: EdgeInsets.all(8.0),
             //Edit WIDGET
             child: TextFormField(
-              controller: discountController,
+              controller: discountController ?? "",
               decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
                   hintText: "Digite seu cupom"),
-              /* initialValue:
+              /*     initialValue:
                   //caso seja nulo
-                  CartModel.of(context).cupomCode ?? "" , */
+                  CartModel.of(context).cupomCode ?? "", */
               onFieldSubmitted: (text) {
                 if (text == null || text.isEmpty) {
                   //aplicar cupom de desconto
