@@ -106,4 +106,29 @@ class CartModel extends Model {
 
     notifyListeners();
   }
+
+  //função de retorno de valores de produtos
+  double getProductsPrice() {
+    double price = 0.0;
+    for (CartProduct c in listProducts) {
+      if (c.productData != null) {
+        price += c.quantity * c.productData.price;
+      }
+    }
+    return price;
+  }
+
+  //função de retorno de valores de desconto
+  double getDiscountPrice() {
+    return getProductsPrice() * cupomPercentage / 100;
+  }
+
+  //função de retorno de valores de frete
+  double getShipPrice() {
+    return 9.99;
+  }
+
+  void updatePrice() {
+    notifyListeners();
+  }
 }

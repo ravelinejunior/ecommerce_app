@@ -13,6 +13,8 @@ class CartTile extends StatelessWidget {
   Widget build(BuildContext context) {
     //WIDGET CONSTRUTOR DOS ITENS
     Widget _buildContent() {
+// inicializar função de atualização dos preços
+      CartModel.of(context).updatePrice();
       return Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[

@@ -17,6 +17,12 @@ class CartPrice extends StatelessWidget {
         //como os dados irão variar devido aos produtos, usar scopedmodel
         child: ScopedModelDescendant<CartModel>(
           builder: (context, child, model) {
+            //variaveis de calculo final de produto
+            double price = model.getProductsPrice();
+            double discount = model.getDiscountPrice();
+            double ship = model.getShipPrice();
+            double total = price - discount + ship;
+
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
@@ -32,7 +38,7 @@ class CartPrice extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text("SubTotal"),
-                    Text("R\$ 0,00"),
+                    Text("R\$ ${price.toStringAsFixed(2)}"),
                   ],
                 ),
                 Divider(),
@@ -42,7 +48,7 @@ class CartPrice extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text("Frete"),
-                    Text("R\$ 0,00"),
+                    Text("R\$ ${ship.toStringAsFixed(2)}"),
                   ],
                 ),
                 Divider(),
@@ -52,7 +58,9 @@ class CartPrice extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text("Desconto"),
-                    Text("R\$ 0,00"),
+                    Text(discount > 1
+                        ? "R\$ -${discount.toStringAsFixed(2)}"
+                        : "R\$ ${discount.toStringAsFixed(2)}"),
                   ],
                 ),
                 Divider(),
@@ -68,7 +76,7 @@ class CartPrice extends StatelessWidget {
                             fontSize: 16,
                             fontWeight: FontWeight.bold)),
                     Text(
-                      "R\$ 0,00",
+                      "R\$ ${total.toStringAsFixed(2)}",
                       style: TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontSize: 16,

@@ -2,8 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/model/cart_model.dart';
 import 'package:flutter/material.dart';
 
-class DiscountCart extends StatelessWidget {
+class DiscountCart extends StatefulWidget {
+  @override
+  _DiscountCartState createState() => _DiscountCartState();
+}
+
+class _DiscountCartState extends State<DiscountCart> {
   TextEditingController discountController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Card(
