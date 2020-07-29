@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/datas/cart_product.dart';
 import 'package:ecommerce_app/model/user_model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class CartModel extends Model {
@@ -44,6 +45,8 @@ class CartModel extends Model {
       //salvar o id gerado do product
       cartProduct.idCart = doc.documentID;
     });
+
+    Intl.defaultLocale = 'pt_BR';
 
     //notificar alteração
     notifyListeners();
@@ -92,6 +95,10 @@ class CartModel extends Model {
 
   //carregar todos os itens na tela
   void _loadCartItems() async {
+    var dDay = new DateTime.utc(1944, 6, 6);
+    var now = new DateTime.now();
+    var berlinWallFell = new DateTime.utc(1989, 11, 9);
+    var moonLanding = DateTime.parse("1969-07-20 20:18:04Z");
     //recuperar todos os documentos
     QuerySnapshot querySnapshot = await Firestore.instance
         .collection("Users")
@@ -103,6 +110,11 @@ class CartModel extends Model {
     listProducts = querySnapshot.documents
         .map((doc) => CartProduct.fromDocument(doc))
         .toList();
+
+    print(dDay);
+    print("Now" + now.toString());
+    print(berlinWallFell);
+    print(moonLanding);
 
     notifyListeners();
   }

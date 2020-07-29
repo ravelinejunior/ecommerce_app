@@ -1,11 +1,13 @@
 import 'package:ecommerce_app/model/cart_model.dart';
 import 'package:ecommerce_app/model/user_model.dart';
 import 'package:ecommerce_app/screens/login_screen.dart';
+import 'package:ecommerce_app/screens/order_screen.dart';
 import 'package:ecommerce_app/tiles/cart_tile_product.dart';
 import 'package:ecommerce_app/widgets/cart_price.dart';
 import 'package:ecommerce_app/widgets/cep_widget.dart';
 import 'package:ecommerce_app/widgets/discount_cart.dart';
 import 'package:flutter/material.dart';
+
 import 'package:scoped_model/scoped_model.dart';
 
 class CartSreen extends StatelessWidget {
@@ -41,6 +43,7 @@ class CartSreen extends StatelessWidget {
           ),
         ],
       ),
+
       //como a tela dependerá do CartModel, setar scopedmodel
       body: ScopedModelDescendant<CartModel>(
         builder: (context, child, model) {
@@ -132,7 +135,15 @@ class CartSreen extends StatelessWidget {
                 CartPrice(
                   () async {
                     String orderId = await model.finishOrders();
-                    if (orderId != null) print("Order Id:" + orderId);
+                    //widget de carregamento
+
+                    CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    );
+                    if (orderId != null)
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => OrderScreen(orderId),
+                      ));
                   },
                 ),
               ],

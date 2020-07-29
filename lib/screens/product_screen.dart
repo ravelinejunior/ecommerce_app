@@ -27,6 +27,8 @@ class _ProductScreenState extends State<ProductScreen> {
   _ProductScreenState(this.product);
 
   final Color corTheme = Colors.redAccent;
+  final GlobalKey<ScaffoldState> _globalKeyScaffold =
+      GlobalKey<ScaffoldState>();
 
   //string para verificar qual tamanho está selecionado
   String size;
@@ -34,6 +36,7 @@ class _ProductScreenState extends State<ProductScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _globalKeyScaffold,
       appBar: AppBar(
         title: Text(
           product.title,
@@ -167,10 +170,22 @@ class _ProductScreenState extends State<ProductScreen> {
                                   cartProduct.category = product.category;
                                   cartProduct.quantity = 1;
                                   cartProduct.idProduct = product.id;
+                                  cartProduct.productData = product;
 
                                   //adicionar carrinho
                                   CartModel.of(context)
                                       .addCartItem(cartProduct);
+
+                                  _globalKeyScaffold.currentState
+                                      .showSnackBar(SnackBar(
+                                    content: Text(
+                                      "Produto Adiconado",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    backgroundColor:
+                                        Theme.of(context).primaryColor,
+                                    duration: Duration(seconds: 3),
+                                  ));
                                 } else {
                                   // jogar usuario para a tela de login
                                   Navigator.of(context).push(

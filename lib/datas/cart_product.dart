@@ -30,7 +30,7 @@ class CartProduct {
       'idProduct': idProduct,
       'quantity': quantity,
       'size': size,
-      //'product':productData.toResumedMap() // resumo dos dados do produto
+      'product': productData.toResumedMap() // resumo dos dados do produto
     };
   }
 }
