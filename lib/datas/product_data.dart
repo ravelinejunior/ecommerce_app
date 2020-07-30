@@ -23,10 +23,6 @@ class ProductData {
 
 //pegar o "resumo dos dados selecionados no carrinho"
   Map<String, dynamic> toResumedMap() {
-    return {
-      'title': title,
-      'description': description,
-      'price': price,
-    };
+    return {'title': title, 'description': description, 'price': price};
   }
 }
