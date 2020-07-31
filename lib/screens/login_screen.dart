@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
       extendBodyBehindAppBar: true,
       //APPBAR WIDGET
       appBar: AppBar(
-        backgroundColor: Colors.pink,
+        backgroundColor: Colors.pink[200],
         title: Text(
           "Login",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -184,25 +184,24 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _onSucess() {
-    Center(
-        child: CircularProgressIndicator(
-      valueColor: AlwaysStoppedAnimation<Color>(Colors.pink),
-    ));
-    Future.delayed(Duration(seconds: 3));
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(
+        content: Text("Acesso permitido.",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0)),
+        duration: Duration(seconds: 3),
+        backgroundColor: Colors.greenAccent,
+      ),
+    );
+
     Navigator.of(context).pop();
   }
 
   void _onFailure() {
-    Center(
-        child: CircularProgressIndicator(
-      valueColor: AlwaysStoppedAnimation<Color>(Colors.pink),
-    ));
-    Future.delayed(Duration(seconds: 3));
     _scaffoldKey.currentState.showSnackBar(SnackBar(
-      content: Text("Falha ao logar",
+      backgroundColor: Colors.white,
+      content: Text("Verifique sua senha e email",
           style: TextStyle(
               color: Colors.red, fontWeight: FontWeight.bold, fontSize: 16.0)),
-      backgroundColor: Colors.black,
       duration: Duration(seconds: 3),
     ));
   }

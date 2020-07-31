@@ -81,10 +81,6 @@ class UserModel extends Model {
       isLoading = false;
       notifyListeners();
     });
-
-    //após carregar notificar que não está mais carregando
-    isLoading = false;
-    notifyListeners();
   }
 
 //recuperar senha

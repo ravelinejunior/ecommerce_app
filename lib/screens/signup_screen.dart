@@ -196,6 +196,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     //sair da tela apos criação
     Future.delayed(Duration(seconds: 3)).then((_) {
       Navigator.of(context).pop();
+      Navigator.of(context).pop();
     });
   }
 

@@ -74,10 +74,10 @@ class OrderTile extends StatelessWidget {
     //percorrer pedidos
     for (LinkedHashMap p in snapshot.data['products']) {
       text +=
-          "${p['quantity']} x ${p["product"]["title"]} (R\$ ${p["product"]["price"].toStringAsFixed(2)})\n ";
+          "${p['quantity']} x ${p["product"]["title"]} (R\$ ${p["product"]["price"].toStringAsFixed(2)})\n";
     }
 
-    text += "Total: R\$ ${snapshot.data["totalPrice"].toStringAsFixed(2)}\n ";
+    text += "Total: R\$ ${snapshot.data["totalPrice"].toStringAsFixed(2)}\n";
     //#TODO adicionar uma data
     return text;
   }
