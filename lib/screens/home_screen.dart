@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/screens/IA_screen.dart';
 import 'package:ecommerce_app/tabs/home_tab.dart';
 import 'package:ecommerce_app/tabs/orders_tab.dart';
 import 'package:ecommerce_app/tabs/places_tab.dart';
@@ -46,6 +47,16 @@ class HomeScreen extends StatelessWidget {
             backgroundColor: Colors.red[300],
           ),
           body: OrdersTab(),
+          drawer: CustomDrawer(_pageController),
+        ),
+
+        Scaffold(
+          appBar: AppBar(
+            title: Text("IA "),
+            centerTitle: true,
+            backgroundColor: Colors.red[300],
+          ),
+          body: IAScreen(),
           drawer: CustomDrawer(_pageController),
         ),
       ],

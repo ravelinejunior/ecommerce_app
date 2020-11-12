@@ -116,6 +116,8 @@ class CustomDrawer extends StatelessWidget {
               DrawerTile(Icons.category, "Categorias", pageController, 1),
               DrawerTile(Icons.list, "Lojas", pageController, 2),
               DrawerTile(Icons.location_on, "Meus Pedidos", pageController, 3),
+              DrawerTile(Icons.data_usage, "Inteligencia Artificial",
+                  pageController, 4),
             ],
           ),
         ],
